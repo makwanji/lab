@@ -22,24 +22,16 @@ vm1:
   vm_name: ansible_vm1
   mem_size: 1024
   cpus: 1
-  public_ip: 192.168.56.100
+  public_ip: 192.168.1.11
 
 vm2:
   vm_name: ansible_vm2
   mem_size: 1024
   cpus: 1
-  public_ip: 192.168.56.100
+  public_ip: 192.168.1.12
 
 lb1:
   vm_name: ansible_lb1
   mem_size: 1024
   cpus: 1
-  public_ip: 192.168.56.100
-
-node2:
-  vm_name: ol7_121_rac2
-  mem_size: 6144
-  cpus: 2
-  public_ip: 192.168.56.102
-  private_ip: 192.168.1.102
-  u01_disk: ./ol7_121_rac2_u01.vdi
+  public_ip: 192.168.1.10

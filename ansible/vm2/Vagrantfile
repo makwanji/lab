@@ -10,6 +10,8 @@ var_non_rotational = params['ubuntu']['non_rotational']
 var_vm_name        = params['vm2']['vm_name']
 var_mem_size       = params['vm2']['mem_size']
 var_cpus           = params['vm2']['cpus']
+var_public_ip      = params['vm2']['public_ip']
+
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -47,7 +49,7 @@ Vagrant.configure("2") do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network"
+  config.vm.network "public_network", ip: var_public_ip
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
