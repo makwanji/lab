@@ -30,6 +30,12 @@ vm2:
   cpus: 1
   public_ip: 192.168.56.100
 
+lb1:
+  vm_name: ansible_lb1
+  mem_size: 1024
+  cpus: 1
+  public_ip: 192.168.56.100
+
 node2:
   vm_name: ol7_121_rac2
   mem_size: 6144
