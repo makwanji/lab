@@ -1,3 +1,3 @@
-# lab
+# Ansible project
 
-This one is to setup VMS
+To play and learn the ansible command
