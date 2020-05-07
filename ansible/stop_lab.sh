@@ -1,3 +1,6 @@
+#/bin/bash
+
+
 #stoplab.sh
 
 cd vm1
