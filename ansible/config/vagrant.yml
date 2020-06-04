@@ -1,22 +1,8 @@
 #vagrant.yml
 
-oracle:
-  box: bento/oracle-7
-  non_rotational: 'on'
-  asm_disk_1: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_1.vdi
-  asm_disk_2: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_2.vdi
-  asm_disk_3: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_3.vdi
-  asm_disk_4: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_4.vdi
-  asm_disk_size: 20
-
 ubuntu:
   box: bento/ubuntu-18.04
   non_rotational: 'on'
-  asm_disk_1: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_1.vdi
-  asm_disk_2: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_2.vdi
-  asm_disk_3: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_3.vdi
-  asm_disk_4: /u05/VirtualBox/shared/ol7_121_rac/asm_disk_4.vdi
-  asm_disk_size: 20
 
 vm1:
   vm_name: ansible_vm1

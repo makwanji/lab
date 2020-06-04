@@ -1,0 +1,23 @@
+#vagrant.yml
+
+ubuntu:
+  box: bento/ubuntu-18.04
+  non_rotational: 'on'
+
+vm1:
+  vm_name: k8node1
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.1.21
+
+vm2:
+  vm_name: k8node2
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.1.22
+
+vm3:
+  vm_name: k8node3
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.1.23
