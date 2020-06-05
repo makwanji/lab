@@ -1,16 +1,16 @@
-
 Rem set location of your home folder
-cd C:\mylab\lab
 
-Rem start node1
-cd kubernetes\k8node1
-vagrant down
+set LAB_HOME_LOC=C:\mylab\lab
+echo %LAB_HOME_LOC%
 
-Rem start node2
-cd kubernetes\k8node2
-vagrant down
+Rem stop node1
+cd %LAB_HOME_LOC%\kubernetes\k8node1
+vagrant halt
 
-Rem start node3
-cd kubernetes\k8node3
-vagrant down
+Rem stop node2
+cd %LAB_HOME_LOC%\kubernetes\k8node2
+vagrant halt
 
+Rem stop node3
+cd %LAB_HOME_LOC%\kubernetes\k8node3
+vagrant halt
