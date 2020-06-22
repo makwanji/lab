@@ -21,3 +21,9 @@ vm3:
   mem_size: 2048
   cpus: 2
   public_ip: 192.168.1.23
+
+vm4:
+  vm_name: k8node4
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.1.24
