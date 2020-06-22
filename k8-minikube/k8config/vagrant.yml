@@ -1,7 +1,7 @@
 #vagrant.yml
 
 os:
-  box: centos/7
+  box: "centos/7"
   non_rotational: 'on'
 
 vm1:

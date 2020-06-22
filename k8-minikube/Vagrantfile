@@ -7,10 +7,10 @@ params = YAML.load_file '../k8config/vagrant.yml'
 var_box            = params['os']['box']
 var_non_rotational = params['os']['non_rotational']
 
-var_vm_name        = params['k8minikube']['vm_name']
-var_mem_size       = params['k8minikube']['mem_size']
-var_cpus           = params['k8minikube']['cpus']
-var_public_ip      = params['vmk8minikube1']['public_ip']
+var_vm_name        = params['vm1']['vm_name']
+var_mem_size       = params['vm1']['mem_size']
+var_cpus           = params['vm1']['cpus']
+var_public_ip      = params['vm1']['public_ip']
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
