@@ -1,0 +1,12 @@
+#vagrant.yml
+
+os:
+  box: centos/7
+  non_rotational: 'on'
+
+vm1:
+  vm_name: k8minikube
+  mem_size: 4096
+  cpus: 2
+  public_ip: 192.168.1.31
+
