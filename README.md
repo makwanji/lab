@@ -6,6 +6,12 @@ This project is to setup LAB environment  ent using Vagrant and VirtualBox.
 Download 5.2 version of software
 https://www.virtualbox.org/wiki/Download_Old_Builds_5_2
 
+### Install Virtualbox 6.1 & Vagarnat in Ubuntu 20.04
+https://linuxconfig.org/install-virtualbox-on-ubuntu-20-04-focal-fossa-linux
+
+### Issue fix
+https://github.com/oracle/vagrant-projects/issues/178#issue-536720633
+
 ### Install Vagaant software
 Download from below
 https://www.vagrantup.com/downloads
