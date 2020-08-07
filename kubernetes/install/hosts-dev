@@ -1,0 +1,15 @@
+
+# hosts-dev
+
+[ixdev]
+#ap1 ansible_host=13.251.68.45
+
+[k8master]
+k8m1 ansible_host=192.168.1.21
+k8m2 ansible_host=192.168.1.22
+
+[k8worker]
+k8node1 ansible_host=192.168.1.31
+k8node2 ansible_host=192.168.1.32
+k8node3 ansible_host=192.168.1.33
+k8node4 ansible_host=192.168.1.34

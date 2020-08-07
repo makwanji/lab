@@ -20,22 +20,22 @@ k8node1:
   vm_name: k8node1
   mem_size: 2048
   cpus: 2
-  public_ip: 192.168.1.21
+  public_ip: 192.168.1.31
 
 k8node2:
   vm_name: k8node2
   mem_size: 2048
   cpus: 2
-  public_ip: 192.168.1.22
+  public_ip: 192.168.1.32
 
 k8node3:
   vm_name: k8node3
   mem_size: 2048
   cpus: 2
-  public_ip: 192.168.1.23
+  public_ip: 192.168.1.33
 
 k8node4:
   vm_name: k8node4
   mem_size: 2048
   cpus: 2
-  public_ip: 192.168.1.24
+  public_ip: 192.168.1.34
