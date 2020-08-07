@@ -7,10 +7,11 @@ params = YAML.load_file '../k8config/vagrant.yml'
 var_box            = params['ubuntu']['box']
 var_non_rotational = params['ubuntu']['non_rotational']
 
-var_vm_name        = params['vm4']['vm_name']
-var_mem_size       = params['vm4']['mem_size']
-var_cpus           = params['vm4']['cpus']
-var_public_ip      = params['vm4']['public_ip']
+var_vm_name        = params['k8node4']['vm_name']
+var_mem_size       = params['k8node4']['mem_size']
+var_cpus           = params['k8node4']['cpus']
+var_public_ip      = params['k8node4']['public_ip']
+
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -73,8 +74,9 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+    # apt-get update
+    # apt-get install -y apache2
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCa0Ywtj+ktpwGFoeFOlvpvUqVHDPKWLquLJI//HU8EpsQOoLN2lcAVsq7snpJuQm0tFZ3lQhBJ9DjXNFF3ktt+VDe8MHHdU2enHoKelIyrKbnKjZRWg51Uo6QlRTr+y5fq6HJJ08Ql9PIk88XOQI8eeMXyeeldp6KUYLVPgImxVcQRgeDQgBFzcU4vluIQ27iLEh9YYEsWLLNYdRTvoMufZj8sLSVsvHQAzNyohRmLwg8R8Xy8x78FrigaGZou4z5uFQvm6R4lTBARHAy4G49LYtymAEU8+M3KJMOeLGDxQRTq416RnJGlnjsBACrCzp9ImUmwLrHpQd26l1Yv23JrId/zAlD95fUNF3efoqTGZz7s3MQcCvCcxmlygUQEz/yBZQ22T5o+ntW0ipfTogPKq84YsQ8i5gQeOT3oi3Vm0cktUQAOUkxu4fYPTMUKUamnzCif5gOY5DuwWz+5uIOIZlY9MPuDJSeQXE8/avpalS8cbPLBjQBHv2EZJXi1+C0= rudra@jmwin" >> /home/vagrant/.ssh/authorized_keys
+  SHELL
 end
