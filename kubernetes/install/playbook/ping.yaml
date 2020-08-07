@@ -1,6 +1,6 @@
 # ping.yml
 ---
-  - hosts: all
+  - hosts: k8master
     tasks:
       - name: Ping all servers
         action: ping
