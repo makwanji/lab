@@ -1,0 +1,74 @@
+---
+- name: Manage Traefik Service
+  hosts: all
+  become: yes
+  vars:
+    traefik_bin_path: "/usr/local/bin/traefik"
+    traefik_config_path: "/etc/traefik/traefik.yml"
+    local_traefik_config: "../config/traefik.yml"  # Path to your local config file
+    traefik_log_dir: "/var/log/traefik"
+    traefik_log_file: "/var/log/traefik/traefik.log"
+
+  tasks:
+    - name: Ensure Traefik config directory exists
+      file:
+        path: /etc/traefik
+        state: directory
+        mode: '0755'
+
+    - name: Copy local Traefik config file to target machine
+      copy:
+        src: "{{ local_traefik_config }}"
+        dest: "{{ traefik_config_path }}"
+        mode: '0644'
+      notify: Restart Traefik
+
+    - name: Ensure Traefik log directory exists
+      file:
+        path: "{{ traefik_log_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Ensure Traefik log file exists
+      file:
+        path: "{{ traefik_log_file }}"
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Create systemd service file for Traefik
+      copy:
+        dest: /etc/systemd/system/traefik.service
+        content: |
+          [Unit]
+          Description=Traefik Proxy
+          After=network.target
+
+          [Service]
+          ExecStart={{ traefik_bin_path }} --configFile={{ traefik_config_path }}
+          Restart=always
+          User=root
+          StandardOutput=append:/var/log/traefik/traefik.log
+          StandardError=append:/var/log/traefik/traefik.log
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Reload systemd
+
+    - name: Start and enable Traefik service
+      systemd:
+        name: traefik
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Reload systemd
+      command: systemctl daemon-reload
+
+    - name: Restart Traefik
+      systemd:
+        name: traefik
+        state: restarted
