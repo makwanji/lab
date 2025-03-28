@@ -21,11 +21,11 @@ ansible-playbook ./playbook/traefik-manage.yml -l traefik-vm
 
 
 ## Playbook - docker vm
-
 ```bash
 # Ping connection
 ansible-playbook ./playbook/ping.yml -l docker
 ansible-playbook ./playbook/update-hostname.yml -l docker
 ansible-playbook ./playbook/docker-install.yml -l docker
 ```
+
 
