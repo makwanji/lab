@@ -3,7 +3,8 @@
 traefik-vm1 ansible_host=192.168.2.41 ansible_user=ubuntu ansible_become=true ansible_sudo_pass=123 host_name=traefik-vm1
 
 [docker]
-docker ansible_host=192.168.2.42 ansible_user=ubuntu ansible_become=true ansible_sudo_pass=123 host_name=docker
+docker-vm1 ansible_host=192.168.2.41 ansible_user=ubuntu ansible_become=true ansible_sudo_pass=123 host_name=docker-vm1
+docker-vm2 ansible_host=192.168.2.42 ansible_user=ubuntu ansible_become=true ansible_sudo_pass=123 host_name=docker-vm2
 
 [wazuh]
 wazuh-guest1 ansible_host=192.168.1.51

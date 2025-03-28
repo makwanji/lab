@@ -4,15 +4,14 @@ https://www.proxmox.com
 
 ## VM's
 ```bash
-lab-server1 - traffiq  #41
-lab-server2 - docker   #42
-
-wazuh-guest1 - 2008
-wazuh-guest2 - win11
-wazuh-guest3 - RHEL8
-wazuh-guest4 - CentOS9
-wazuh-guest5 - Ubuntu2204
-wazuh-guest6 - Ubuntu2404
+192.168.2.41 lab-server1.mylab.com
+192.168.2.42 lab-server2.mylab.com
+192.168.2.51 wazuh-guest1.mylab.com # 2008
+192.168.2.52 wazuh-guest2.mylab.com # win11
+192.168.2.53 wazuh-guest3.mylab.com # - RHEL8
+192.168.2.54 wazuh-guest4.mylab.com # - CentOS9
+192.168.2.55 wazuh-guest5.mylab.com # - Ubuntu2204
+192.168.2.56 wazuh-guest6.mylab.com # - Ubuntu2404
 ```
 
 ## Update DNS
