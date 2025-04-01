@@ -1,0 +1,39 @@
+---
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+services:
+  cloudflaretunnel:
+    container_name: cloudflaretunnel
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    command: tunnel --no-autoupdate run
+    networks:
+      - frontend
+      - backend
+
+
+
+
+  my_service:
+    image: my_image:latest
+    environment:
+      - ENV_VAR1=value1
+      - ENV_VAR2=value2
+    ports:
+      - "8080:8080"
+      -
+      - docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiNWVjNmI1M2FjOWMzZDNmYzIwYmJlZDhjYmYzY2Y5NzAiLCJ0IjoiM2NiZDY5ZGMtOTc2Ny00ZGI5LThhN2YtODcxMWQxMmI4OTVmIiwicyI6IllURTVPVFEzWWpndFlUQmlOQzAwTlRNeUxUZzVNelF0TkRGaE5UZG1aakZoTkRsbCJ9
+      -
+      -
+      -
+
+
+
+      docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiNWVjNmI1M2FjOWMzZDNmYzIwYmJlZDhjYmYzY2Y5NzAiLCJ0IjoiM2NiZDY5ZGMtOTc2Ny00ZGI5LThhN2YtODcxMWQxMmI4OTVmIiwicyI6IllURTVPVFEzWWpndFlUQmlOQzAwTlRNeUxUZzVNelF0TkRGaE5UZG1aakZoTkRsbCJ9

@@ -1,0 +1,34 @@
+---
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+volumes:
+  traefik-ssl-certs:
+    driver: local
+
+services:
+  traefik:
+    container_name: traefik
+    image: docker.io/library/traefik:v3.3.4
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /run/docker.sock:/run/docker.sock:ro
+      - ./config/:/etc/traefik/:ro
+      - ./certs/:/var/traefik/certs/:rw
+
+    networks:
+      - frontend
+      - backend
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: unless-stopped
+    networks:
+      - frontend

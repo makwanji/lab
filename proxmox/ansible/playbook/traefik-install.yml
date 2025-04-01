@@ -1,0 +1,46 @@
+---
+- name: Install Traefik on Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Check if Traefik is already installed
+      command: traefik version
+      register: traefik_installed
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Get the latest Traefik release version
+      shell: curl -s https://api.github.com/repos/traefik/traefik/releases/latest | grep '"tag_name":' | cut -d '"' -f 4 | sed 's/v//'
+      register: traefik_version
+      when: traefik_installed.rc != 0
+
+    - name: Download Traefik binary
+      get_url:
+        url: "https://github.com/traefik/traefik/releases/download/v{{ traefik_version.stdout }}/traefik_v{{ traefik_version.stdout }}_linux_amd64.tar.gz"
+        dest: "/tmp/traefik.tar.gz"
+      when: traefik_installed.rc != 0
+
+    - name: Extract Traefik binary
+      unarchive:
+        src: "/tmp/traefik.tar.gz"
+        dest: "/tmp/"
+        remote_src: yes
+      when: traefik_installed.rc != 0
+
+    - name: Move Traefik binary to /usr/local/bin
+      copy:
+        src: "/tmp/traefik"
+        dest: "/usr/local/bin/traefik"
+        mode: '0755'
+        remote_src: yes
+      when: traefik_installed.rc != 0
+
+    - name: Verify Traefik installation
+      command: traefik version
+      register: traefik_check
+      changed_when: false
+
+    - name: Print installed Traefik version
+      debug:
+        msg: "Traefik installed successfully! Version: {{ traefik_check.stdout }}"
+
