@@ -1,0 +1,4 @@
+zone "home.mylab.com" {
+  type master;
+  file "/etc/bind/db.home.mylab.com";
+};
