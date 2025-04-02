@@ -1,11 +1,13 @@
 # Ansible script
 
 ## Run this script
-`cd proxmox/ansible`
+`cd ocpapi/ansible`
 
 ## Playbook - traefik
 
 ```bash
 # Ping connection
-ansible-playbook ./playbook/proxmox.yml -l proxmox
+ansible-playbook ./playbook/ocpapi.yml -l ocpapi
 ```
+
+
