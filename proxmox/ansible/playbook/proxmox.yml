@@ -53,34 +53,34 @@
         - user_choice.user_input | lower == 'yes'
         - updates_available.stdout | length > 0
 
-    - name: Get current hostname
-      command: hostname
-      register: current_hostname
-      changed_when: false
+    # - name: Get current hostname
+    #   command: hostname
+    #   register: current_hostname
+    #   changed_when: false
 
-    - name: Set the hostname (only if different)
-      hostname:
-        name: "{{ host_name }}"
-      when: current_hostname.stdout != host_name
+    # - name: Set the hostname (only if different)
+    #   hostname:
+    #     name: "{{ host_name }}"
+    #   when: current_hostname.stdout != host_name
 
-    - name: Update /etc/hostname (only if different)
-      copy:
-        content: "{{ host_name }}\n"
-        dest: /etc/hostname
-      when: current_hostname.stdout != host_name
+    # - name: Update /etc/hostname (only if different)
+    #   copy:
+    #     content: "{{ host_name }}\n"
+    #     dest: /etc/hostname
+    #   when: current_hostname.stdout != host_name
 
-    - name: Update /etc/hosts (only if different)
-      lineinfile:
-        path: /etc/hosts
-        regexp: "^127\\.0\\.1\\.1\\s"
-        line: "127.0.1.1 {{ host_name }}"
-        state: present
-      when: current_hostname.stdout != host_name
+    # - name: Update /etc/hosts (only if different)
+    #   lineinfile:
+    #     path: /etc/hosts
+    #     regexp: "^127\\.0\\.1\\.1\\s"
+    #     line: "127.0.1.1 {{ host_name }}"
+    #     state: present
+    #   when: current_hostname.stdout != host_name
 
-    - name: Apply the hostname change (only if different)
-      command: hostnamectl set-hostname "{{ host_name }}"
-      when: current_hostname.stdout != host_name
-      changed_when: true
+    # - name: Apply the hostname change (only if different)
+    #   command: hostnamectl set-hostname "{{ host_name }}"
+    #   when: current_hostname.stdout != host_name
+    #   changed_when: true
 
     # - name: Install softwaer
     #   apt:

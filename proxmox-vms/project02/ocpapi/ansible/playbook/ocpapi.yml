@@ -1,14 +1,24 @@
 ---
-- name: Install Bind9 # https://www.ionos.com/digitalguide/server/configuration/how-to-make-your-raspberry-pi-into-a-dns-server/
+- name: NGINX Loadbalancer
   hosts: all
   become: yes
   tasks:
+
+    - name: Update DNS server
+      become: yes
+      lineinfile:
+        path: /etc/resolv.conf
+        regexp: '^nameserver'
+        line: 'nameserver 192.168.2.2'
+        state: present
+
     - name: Update APT package manager repositories cache
       apt:
         update_cache: yes
     - name: Upgrade installed packages
       apt:
         upgrade: dist
+
     - name: Get current hostname
       command: hostname
       register: current_hostname
@@ -47,10 +57,10 @@
         update_cache: yes
       become: yes
 
-    - name: Copy nginx.conf to /etc/bind/
+    - name: Copy openshift-api.conf to /etc/nginx/conf.d/
       ansible.builtin.copy:
-        src: files/default.conf
-        dest: /etc/nginx/nginx.conf
+        src: files/openshift-api.conf
+        dest: /etc/nginx/conf.d/openshift-api.conf
         owner: root
         group: root
         mode: '0644'
