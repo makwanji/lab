@@ -3,6 +3,13 @@
   hosts: all
   become: yes
   tasks:
+    - name: Ensure HandleLidSwitch is set to ignore in logind.conf
+      replace:
+        path: /etc/systemd/logind.conf
+        regexp: '^#?\s*HandleLidSwitch=suspend'
+        replace: 'HandleLidSwitch=ignore'
+        backup: yes
+      notify: Restart systemd-logind
 
     - name: Disable Proxmox Enterprise repository
       replace:
@@ -102,13 +109,6 @@
     #   become: yes
     #   notify: Restart Bind9
 
-    - name: Ensure HandleLidSwitch is set to ignore in logind.conf
-      replace:
-        path: /etc/systemd/logind.conf
-        regexp: '^#?\s*HandleLidSwitch=suspend'
-        replace: 'HandleLidSwitch=ignore'
-        backup: yes
-      notify: Restart systemd-logind
 
 
   handlers:
