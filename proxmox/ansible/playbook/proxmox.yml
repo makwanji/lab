@@ -1,0 +1,119 @@
+---
+- name: Update Proxmox setup # https://medium.com/@LDS_Cyber/proxmox-server-on-a-laptop-c02a0d615175
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Disable Proxmox Enterprise repository
+      replace:
+        path: /etc/apt/sources.list.d/pve-enterprise.list
+        regexp: '^(deb https://enterprise.proxmox.com/debian/pve)'
+        replace: '# \1'
+        backup: yes
+
+    - name: Disable Proxmox Enterprise and Ceph Quincy repositories
+      replace:
+        path: /etc/apt/sources.list.d/pve-enterprise.list
+        regexp: '^(deb https://enterprise.proxmox.com/debian/(pve|ceph-quincy))'
+        replace: '# \1'
+        backup: yes
+
+    - name: Add Proxmox No-Subscription repository to /etc/apt/sources.list
+      lineinfile:
+        path: /etc/apt/sources.list
+        line: 'deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription'
+        state: present
+        create: yes
+        mode: '0644'
+
+    - name: Update package lists (apt-get update)
+      apt:
+        update_cache: yes
+
+    - name: Check for available package updates
+      command: apt list --upgradable
+      register: updates_available
+      changed_when: false
+
+    - name: Display available updates
+      debug:
+        msg: "{{ updates_available.stdout_lines }}"
+      when: updates_available.stdout | length > 0
+
+    - name: Prompt user for confirmation before upgrading packages
+      pause:
+        prompt: "Updates are available. Do you want to proceed with the upgrade? (yes/no)"
+      register: user_choice
+      when: updates_available.stdout | length > 0
+
+    - name: Perform the upgrade if user confirms
+      apt:
+        upgrade: dist
+      when:
+        - user_choice.user_input | lower == 'yes'
+        - updates_available.stdout | length > 0
+
+    - name: Get current hostname
+      command: hostname
+      register: current_hostname
+      changed_when: false
+
+    - name: Set the hostname (only if different)
+      hostname:
+        name: "{{ host_name }}"
+      when: current_hostname.stdout != host_name
+
+    - name: Update /etc/hostname (only if different)
+      copy:
+        content: "{{ host_name }}\n"
+        dest: /etc/hostname
+      when: current_hostname.stdout != host_name
+
+    - name: Update /etc/hosts (only if different)
+      lineinfile:
+        path: /etc/hosts
+        regexp: "^127\\.0\\.1\\.1\\s"
+        line: "127.0.1.1 {{ host_name }}"
+        state: present
+      when: current_hostname.stdout != host_name
+
+    - name: Apply the hostname change (only if different)
+      command: hostnamectl set-hostname "{{ host_name }}"
+      when: current_hostname.stdout != host_name
+      changed_when: true
+
+    # - name: Install softwaer
+    #   apt:
+    #     name:
+    #       - bind9
+    #       - bind9utils
+    #       - dnsutils
+    #     state: present
+    #     update_cache: yes
+    #   become: yes
+
+    # - name: Copy named.conf.local to /etc/bind/
+    #   ansible.builtin.copy:
+    #     src: files/named.conf.local
+    #     dest: /etc/bind/named.conf.local
+    #     owner: root
+    #     group: bind
+    #     mode: '0644'
+    #   become: yes
+    #   notify: Restart Bind9
+
+    - name: Ensure HandleLidSwitch is set to ignore in logind.conf
+      replace:
+        path: /etc/systemd/logind.conf
+        regexp: '^#?\s*HandleLidSwitch=suspend'
+        replace: 'HandleLidSwitch=ignore'
+        backup: yes
+      notify: Restart systemd-logind
+
+
+  handlers:
+    - name: Restart systemd-logind
+      service:
+        name: systemd-logind
+        state: restarted
+
