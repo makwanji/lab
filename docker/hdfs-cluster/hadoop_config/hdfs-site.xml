@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <!-- HDFS storage directory for NameNode -->
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///tmp/hadoop/dfs/name</value>
+        <description>Location of HDFS NameNode storage directory (local directory for a single-node setup).</description>
+    </property>
+
+    <!-- HDFS storage directory for DataNode -->
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///tmp/hadoop/dfs/data</value>
+        <description>Location of DataNode storage directory (local directory for a single-node setup).</description>
+    </property>
+
+    <!-- Replication factor (number of copies of each file) -->
+    <property>
+        <name>dfs.replication</name>
+        <value>3</value>
+        <description>The replication factor of HDFS files.</description>
+    </property>
+
+    <!-- Block size (default block size for HDFS) -->
+    <property>
+        <name>dfs.blocksize</name>
+        <value>134217728</value> <!-- 128 MB -->
+        <description>The block size for HDFS files.</description>
+    </property>
+
+    <!-- HDFS permission checking -->
+    <property>
+        <name>dfs.permissions</name>
+        <value>true</value>
+        <description>Whether to enable HDFS permissions.</description>
+    </property>
+
+    <!-- Enables the NameNode HA (High Availability) -->
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>namenode:9871</value>
+        <description>The HTTP address of the NameNode for web UI.</description>
+    </property>
+
+    <!-- Enables the DataNode HTTP Address -->
+    <property>
+        <name>dfs.datanode.http.address</name>
+        <value>datanode1:50075</value>
+        <description>The HTTP address of the DataNode for web UI.</description>
+    </property>
+    <property>
+        <name>dfs.datanode.http.address</name>
+        <value>datanode2:50075</value>
+        <description>The HTTP address of the DataNode for web UI.</description>
+    </property>
+    <!-- HDFS client read timeout -->
+    <property>
+        <name>dfs.client.read.shortcircuit</name>
+        <value>false</value>
+        <description>Disables short-circuit reads on the client side (may improve performance in certain configurations).</description>
+    </property>
+</configuration>

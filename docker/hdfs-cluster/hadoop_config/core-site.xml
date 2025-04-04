@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <!-- Default filesystem -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://namenode:9870</value>
+        <description>The URI of the default filesystem.</description>
+    </property>
+
+    <!-- HDFS temporary directory -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp/hadoop</value>
+        <description>A base for other temporary directories.</description>
+    </property>
+
+    <!-- HDFS storage directory for the NameNode -->
+    <property>
+        <name>hadoop.security.auth_to_local</name>
+        <value>RULE:[1:$1@$0](.*@EXAMPLE.COM)s/.*/$1/</value>
+        <description>Authentication rules for Kerberos</description>
+    </property>
+</configuration>
