@@ -1,0 +1,66 @@
+services:
+
+  coordinator:
+    image: prestodb/presto:latest
+    container_name: presto-coordinator
+    ports:
+      - "8080:8080"
+    environment:
+      - COORDINATOR=true
+      - DISCOVERY_SERVER_ENABLED=true
+      - HTTP_PORT=8080
+      - NODE_ENVIRONMENT=production
+      - NODE_ID=coordinator
+    volumes:
+      - ./etc:/etc/presto
+      - ./etc/coordinator-config.properties:/etc/presto/config.properties
+    networks:
+      - presto-network
+    restart: unless-stopped
+
+  worker1:
+    image: prestodb/presto:latest
+    container_name: presto-worker1
+    environment:
+      - COORDINATOR=false
+      - DISCOVERY_SERVER_ENABLED=false
+      - HTTP_PORT=8080
+      - NODE_ENVIRONMENT=production
+      - NODE_ID=worker1
+    volumes:
+      - ./etc:/etc/presto
+      - ./etc/worker-config.properties:/etc/presto/config.properties
+    networks:
+      - presto-network
+  worker2:
+    image: prestodb/presto:latest
+    container_name: presto-worker2
+    environment:
+      - COORDINATOR=false
+      - DISCOVERY_SERVER_ENABLED=false
+      - HTTP_PORT=8080
+      - NODE_ENVIRONMENT=production
+      - NODE_ID=worker2
+    volumes:
+      - ./etc:/etc/presto
+      - ./etc/worker-config.properties:/etc/presto/config.properties
+    networks:
+      - presto-network
+  worker3:
+    image: prestodb/presto:latest
+    container_name: presto-worker3
+    environment:
+      - COORDINATOR=false
+      - DISCOVERY_SERVER_ENABLED=false
+      - HTTP_PORT=8080
+      - NODE_ENVIRONMENT=production
+      - NODE_ID=worker3
+    volumes:
+      - ./etc:/etc/presto
+      - ./etc/worker-config.properties:/etc/presto/config.properties
+    networks:
+      - presto-network
+
+networks:
+  presto-network:
+    driver: bridge
