@@ -1,0 +1,41 @@
+# Proxmox API Configuration (Example - DO NOT COMMIT REAL VALUES)
+# Copy this file to terraform.auto.tfvars and update with your actual credentials
+# Format: pm_api_token_id = "user@pam!token-name"
+pm_api_url      = "https://192.168.x.x:8006/api2/json"
+pm_api_token_id = "root@pam!terraform"
+pm_api_token    = "your-token-secret-here"
+pm_tls_insecure = true
+
+# Node Configuration
+target_node = "pve"
+
+# OS Template
+# List available templates on your Proxmox node via: pveam available
+ostemplate = "local:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst"
+
+# Container Resources
+cores       = 1
+memory      = 512
+swap        = 512
+rootfs_size = "10G"
+
+# Storage
+storage = "local-lvm"
+
+# Network
+bridge        = "vmbr0"
+nameserver    = "8.8.8.8"
+search_domain = "home.mylab.com"
+
+# Container Settings
+unprivileged = true
+
+# CT Core Container
+ct_core_vmid   = 100
+ct_core_ip     = "192.168.x.x/24"
+ct_core_hwaddr = "02:06:88:00:00:00"
+
+# CT GitHub Container
+ct_github_vmid   = 101
+ct_github_ip     = "192.168.x.x/24"
+ct_github_hwaddr = "02:06:88:00:00:01"

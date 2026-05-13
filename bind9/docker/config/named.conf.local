@@ -1,0 +1,12 @@
+// Forward zone
+zone "home.mylab.com" IN {
+        type master;
+        file "/etc/bind/db.home.mylab.com";
+};
+
+// Reverse zone
+zone "2.168.192.in-addr.arpa" {
+        type master;
+        file "db.rev.2.168.192.in-addr.arpa";
+};
+
