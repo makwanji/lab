@@ -30,6 +30,12 @@ search_domain = "home.mylab.com"
 # Container Settings
 unprivileged = true
 
+# SSH Public Keys
+# Add your SSH public keys here for remote access
+ssh_public_keys = [
+  # "ssh-rsa AAAA... your-key-here"
+]
+
 # CT Core Container
 ct_core_vmid   = 100
 ct_core_ip     = "192.168.x.x/24"

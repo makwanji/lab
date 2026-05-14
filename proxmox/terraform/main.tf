@@ -46,6 +46,9 @@ resource "proxmox_lxc" "ct_core" {
 
   unprivileged = var.unprivileged
 
+  # SSH keys for root user
+  ssh_public_keys = join("\n", var.ssh_public_keys)
+
   onboot = true
 
   tags = "core"
@@ -82,6 +85,9 @@ resource "proxmox_lxc" "ct_github" {
   searchdomain = var.search_domain
 
   unprivileged = var.unprivileged
+
+  # SSH keys for root user
+  ssh_public_keys = join("\n", var.ssh_public_keys)
 
   onboot = true
 

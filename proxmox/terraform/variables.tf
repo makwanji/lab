@@ -88,6 +88,12 @@ variable "unprivileged" {
   default     = true
 }
 
+variable "ssh_public_keys" {
+  description = "SSH public keys to add to containers"
+  type        = list(string)
+  default     = []
+}
+
 variable "ct_core_vmid" {
   description = "VM ID for ct-core container"
   type        = number
