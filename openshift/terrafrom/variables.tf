@@ -1,11 +1,23 @@
-variable "proxmox_api_token_id" {
+variable "pm_api_url" {
+  description = "Proxmox API URL"
   type        = string
-  description = "Proxmox API Token ID (format: username@realm!tokenname)"
   sensitive   = true
 }
 
-variable "proxmox_api_token_secret" {
+variable "pm_api_token_id" {
+  description = "Proxmox API Token ID"
   type        = string
-  description = "Proxmox API Token Secret"
   sensitive   = true
+}
+
+variable "pm_api_token" {
+  description = "Proxmox API Token"
+  type        = string
+  sensitive   = true
+}
+
+variable "pm_tls_insecure" {
+  description = "Disable TLS certificate verification"
+  type        = bool
+  default     = true
 }
