@@ -1,0 +1,6 @@
+# Copy this file to terraform.tfvars and fill in your Proxmox API credentials
+# Format for API Token ID: username@realm!tokenname
+# Example: proxmox_api_token_id = "root@pam!terraform"
+
+proxmox_api_token_id = "your_api_token_id"
+proxmox_api_token_secret = "your_api_token_secret"
