@@ -42,6 +42,25 @@ sudo poweroff
 
 # Convert VM to Template
 qm template 9000
+
+#Copy template - Export disk from host1
+qm config 9000
+
+#Copy template - copy disk manually
+vzdump 9000 --mode stop --compress zstd --dumpdir /root
+
+#Copy template - SCP
+scp /root/vzdump-qemu-9000-*.vma.zst root@host3:/root/
+
+# ssh
+ssh 192.168.2.34
+
+#Copy template - Restore on host3
+qmrestore /root/vzdump-qemu-9000-*.vma.zst 9001 --storage local-lvm
+
+
+# remote iso
+qm set 9001 --delete ide2
 ```
 
 ## Create VM's in Proxmox
@@ -64,7 +83,7 @@ sudo nmcli con show
 
 # Setup IP
 sudo nmcli con mod "Wired connection 1" \
-ipv4.addresses 192.168.2.41/24 \
+ipv4.addresses 192.168.2.42/24 \
 ipv4.gateway 192.168.2.1 \
 ipv4.method manual
 
