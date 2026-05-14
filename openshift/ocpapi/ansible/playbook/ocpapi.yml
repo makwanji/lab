@@ -1,0 +1,75 @@
+---
+- name: NGINX Loadbalancer
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Update DNS server
+      become: yes
+      lineinfile:
+        path: /etc/resolv.conf
+        regexp: '^nameserver'
+        line: 'nameserver 192.168.2.2'
+        state: present
+
+    - name: Update APT package manager repositories cache
+      apt:
+        update_cache: yes
+    - name: Upgrade installed packages
+      apt:
+        upgrade: dist
+
+    - name: Get current hostname
+      command: hostname
+      register: current_hostname
+      changed_when: false
+
+    - name: Set the hostname (only if different)
+      hostname:
+        name: "{{ host_name }}"
+      when: current_hostname.stdout != host_name
+
+    - name: Update /etc/hostname (only if different)
+      copy:
+        content: "{{ host_name }}\n"
+        dest: /etc/hostname
+      when: current_hostname.stdout != host_name
+
+    - name: Update /etc/hosts (only if different)
+      lineinfile:
+        path: /etc/hosts
+        regexp: "^127\\.0\\.1\\.1\\s"
+        line: "127.0.1.1 {{ host_name }}"
+        state: present
+      when: current_hostname.stdout != host_name
+
+    - name: Apply the hostname change (only if different)
+      command: hostnamectl set-hostname "{{ host_name }}"
+      when: current_hostname.stdout != host_name
+      changed_when: true
+
+    - name: Install software
+      apt:
+        name:
+          - dnsutils
+          - nginx
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Copy openshift-api.conf to /etc/nginx/conf.d/
+      ansible.builtin.copy:
+        src: files/openshift-api.conf
+        dest: /etc/nginx/conf.d/openshift-api.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: yes
+      notify: Restart nginx
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+      become: yes

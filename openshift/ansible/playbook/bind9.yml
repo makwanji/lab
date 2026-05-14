@@ -1,0 +1,39 @@
+---
+- name: Install Bind9 # https://openvpn.net/as-docs/raspberry-pi.html#official-raspberry-pi-vpn-server-with-access-server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update APT package manager repositories cache
+      apt:
+        update_cache: yes
+    - name: Upgrade installed packages
+      apt:
+        upgrade: dist
+    - name: Get current hostname
+      command: hostname
+      register: current_hostname
+      changed_when: false
+
+    - name: Set the hostname (only if different)
+      hostname:
+        name: "{{ host_name }}"
+      when: current_hostname.stdout != host_name
+
+    - name: Update /etc/hostname (only if different)
+      copy:
+        content: "{{ host_name }}\n"
+        dest: /etc/hostname
+      when: current_hostname.stdout != host_name
+
+    - name: Update /etc/hosts (only if different)
+      lineinfile:
+        path: /etc/hosts
+        regexp: "^127\\.0\\.1\\.1\\s"
+        line: "127.0.1.1 {{ host_name }}"
+        state: present
+      when: current_hostname.stdout != host_name
+
+    - name: Apply the hostname change (only if different)
+      command: hostnamectl set-hostname "{{ host_name }}"
+      when: current_hostname.stdout != host_name
+      changed_when: true

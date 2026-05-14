@@ -1,0 +1,11 @@
+---
+  - hosts: all
+    become: true
+    tasks:
+    - name: Update APT package manager repositories cache
+      apt:
+        update_cache: yes
+
+    - name: Upgrade installed packages
+      apt:
+        upgrade: dist
