@@ -24,6 +24,7 @@ storage = "local-lvm"
 
 # Network
 bridge        = "vmbr0"
+gateway       = "192.168.2.1"
 nameserver    = "8.8.8.8"
 search_domain = "home.mylab.com"
 

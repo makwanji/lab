@@ -35,10 +35,11 @@ resource "proxmox_lxc" "ct_core" {
 
   # Network configuration
   network {
-    name   = "eth0"
-    hwaddr = var.ct_core_hwaddr
-    ip     = var.ct_core_ip
-    bridge = var.bridge
+    name    = "eth0"
+    hwaddr  = var.ct_core_hwaddr
+    ip      = var.ct_core_ip
+    gw      = var.gateway
+    bridge  = var.bridge
   }
 
   nameserver   = var.nameserver
@@ -75,10 +76,11 @@ resource "proxmox_lxc" "ct_github" {
 
   # Network configuration
   network {
-    name   = "eth0"
-    hwaddr = var.ct_github_hwaddr
-    ip     = var.ct_github_ip
-    bridge = var.bridge
+    name    = "eth0"
+    hwaddr  = var.ct_github_hwaddr
+    ip      = var.ct_github_ip
+    gw      = var.gateway
+    bridge  = var.bridge
   }
 
   nameserver   = var.nameserver

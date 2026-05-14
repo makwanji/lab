@@ -70,6 +70,12 @@ variable "bridge" {
   default     = "vmbr0"
 }
 
+variable "gateway" {
+  description = "Network gateway IP address"
+  type        = string
+  default     = "192.168.2.1"
+}
+
 variable "nameserver" {
   description = "DNS nameserver"
   type        = string

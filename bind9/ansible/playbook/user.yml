@@ -1,0 +1,53 @@
+---
+- name: Create Ubuntu users with passwordless sudo
+  hosts: all
+  remote_user: root
+  gather_facts: yes
+
+  vars:
+    default_password: "123"
+    users:
+      - username: ubuntu
+      - username: admin
+
+  tasks:
+    - name: Create user accounts
+      user:
+        name: "{{ item.username }}"
+        password: "{{ default_password | password_hash('sha512') }}"
+        shell: /bin/bash
+        createhome: yes
+        groups: sudo
+        append: yes
+      loop: "{{ users }}"
+      register: users_created
+
+    - name: Add users to sudoers with NOPASSWD
+      lineinfile:
+        path: "/etc/sudoers.d/{{ item.username }}"
+        line: "{{ item.username }} ALL=(ALL) NOPASSWD:ALL"
+        create: yes
+        validate: '/usr/sbin/visudo -cf %s'
+        mode: '0440'
+      loop: "{{ users }}"
+
+    - name: Create .ssh directory for users
+      file:
+        path: "/home/{{ item.username }}/.ssh"
+        state: directory
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        mode: '0700'
+      loop: "{{ users }}"
+
+    - name: Copy SSH public key to authorized_keys
+      authorized_key:
+        user: "{{ item.username }}"
+        state: present
+        key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
+      loop: "{{ users }}"
+
+    - name: Display users creation status
+      debug:
+        msg: "User '{{ item.username }}' created successfully with passwordless sudo access and SSH key configured"
+      loop: "{{ users }}"
